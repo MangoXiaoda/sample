@@ -37,10 +37,14 @@ class UsersController extends Controller
     }
 
 
-    // 显示
+    // 显示微博
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $statuses = $user->statuses()
+            ->orderby('created_at', 'desc')
+            ->paginate(30);
+
+        return view('users.show', compact('user', 'statuses'));
     }
 
     // 登录
